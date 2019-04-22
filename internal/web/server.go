@@ -8,11 +8,24 @@ import (
 )
 
 type HttpServer struct {
-	storage *storage.Interface
-	shrt    *shortener.Interface
-	mux     *http.ServeMux
+	storage   storage.URL
+	shortener shortener.EncoderDecoder
+	mux       *http.ServeMux
+}
+
+func NewServer(urlStorage storage.URL, shortener shortener.EncoderDecoder) *HttpServer {
+	srv := &HttpServer{}
+	srv.makeRoutes()
+	return srv
 }
 
 func (s *HttpServer) makeRoutes() {
+	if s.mux == nil {
+		s.mux = http.NewServeMux()
+	}
+	s.mux.Handle("/", http.HandlerFunc(s.handleRequest))
+}
 
+func (srv *HttpServer) Run() error {
+	return http.ListenAndServe(":9090", srv.mux)
 }

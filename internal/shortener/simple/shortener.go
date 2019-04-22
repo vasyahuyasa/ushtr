@@ -17,12 +17,8 @@ type SimpleShortener struct {
 	chars *charmap
 }
 
-func NewWithAlphabet(alphabet string) (*SimpleShortener, error) {
-	if len(alphabet) != 64 {
-		return nil, errors.New("length of alphabet must be 64")
-	}
-
-	chars, err := charmapFromString(alphabet)
+func New() (*SimpleShortener, error) {
+	chars, err := charmapFromString(defaultChars)
 	if err != nil {
 		return nil, errors.New("can not create charmap: " + err.Error())
 	}

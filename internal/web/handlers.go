@@ -3,16 +3,34 @@ package web
 import (
 	"log"
 	"net/http"
-
-	"github.com/vasyahuyasa/ushtr/internal/shortener"
-	"github.com/vasyahuyasa/ushtr/internal/storage"
 )
 
-type shortResponse struct {
-	shorturl string
+func (s *HttpServer) handleRequest(w http.ResponseWriter, r *http.Request) {
+	switch r.Method {
+	case http.MethodGet:
+		//url := r.URL.Path
+		log.Println(r.URL.Path)
+
+	case http.MethodPost:
+	case http.MethodHead:
+	default:
+	}
 }
 
-func createShortUrl(shtnr shortener.Interface, storage storage.Interface) http.HandleFunc {
+func (s *HttpServer) index(w http.ResponseWriter) {
+
+}
+
+func (s *HttpServer) getUrl(w http.ResponseWriter, r *http.Request, shortURL string) {
+
+}
+
+func (s *HttpServer) postUrl(url string) {
+
+}
+
+/*
+func (s *HttpServer) createShortUrl(shtnr hortener.EncoderDecoder, storage storage.Interface) http.HandleFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		url := ""
 		if r.Method == http.MethodGet {
@@ -37,3 +55,4 @@ func createShortUrl(shtnr shortener.Interface, storage storage.Interface) http.H
 		}
 	}
 }
+*/
