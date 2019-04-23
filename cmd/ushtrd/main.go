@@ -7,11 +7,18 @@ import (
 
 	"github.com/vasyahuyasa/ushtr/internal/shortener/simple"
 	"github.com/vasyahuyasa/ushtr/internal/storage"
+
+	// autoload .env for developer purposes
+	_ "github.com/joho/godotenv/autoload"
 )
 
 func main() {
 	cfg := loadConfig()
 	shards := loadShards(cfg.pgPort, cfg.pgUser, cfg.pgPassword, cfg.pgDatabe)
+	if len(shards) == 0 {
+		log.Fatal("no shards defined, define at least one shard")
+	}
+
 	shardList := &storage.Shards{}
 	for _, shard := range shards {
 		err := shardList.AddShard(shard)
@@ -21,6 +28,9 @@ func main() {
 	}
 
 	log.Printf("use %d shards", len(shards))
+	for _, shard := range shards {
+		log.Println("shard", shard)
+	}
 
 	storage, err := storage.NewStorage(
 		storage.WithDefaultPgConnect(cfg.pgHost, cfg.pgPort, cfg.pgUser, cfg.pgPassword, cfg.pgDatabe),

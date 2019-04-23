@@ -59,13 +59,6 @@ func NewStorage(options ...Option) (*PostgreShardedStorage, error) {
 		return nil, fmt.Errorf("can not open postgres: %v", err)
 	}
 
-	/*
-		err = db.Ping()
-		if err != nil {
-			return nil, fmt.Errorf("can not ping postgres: %v", err)
-		}
-	*/
-
 	return &PostgreShardedStorage{
 		db: db,
 	}, nil
@@ -81,5 +74,4 @@ func (ps *PostgreShardedStorage) Get(id uint64) (string, error) {
 
 func (ps *PostgreShardedStorage) Put(url string) (uint64, error) {
 	return 0, fmt.Errorf("not implemented")
-
 }
