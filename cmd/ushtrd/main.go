@@ -14,7 +14,7 @@ import (
 
 func main() {
 	cfg := loadConfig()
-	shards := loadShards(cfg.pgPort, cfg.pgUser, cfg.pgPassword, cfg.pgDatabe)
+	shards := loadShards(cfg.pgPort, cfg.pgUser, cfg.pgPassword)
 	if len(shards) == 0 {
 		log.Fatal("no shards defined, define at least one shard")
 	}
@@ -27,18 +27,12 @@ func main() {
 		}
 	}
 
-	log.Printf("use %d shards", len(shards))
+	log.Printf("use %d shard(s)", len(shards))
 	for _, shard := range shards {
 		log.Println("shard", shard)
 	}
 
-	storage, err := storage.NewStorage(
-		storage.WithDefaultPgConnect(cfg.pgHost, cfg.pgPort, cfg.pgUser, cfg.pgPassword, cfg.pgDatabe),
-		storage.WithShards(shardList),
-	)
-	if err != nil {
-		log.Fatalf("can not create sorage: %v", err)
-	}
+	storage := storage.NewStorage(shardList)
 
 	shortener, err := simple.New()
 	if err != nil {

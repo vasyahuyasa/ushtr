@@ -5,6 +5,21 @@ import (
 	"net/http"
 )
 
+func (s *HttpServer) handleSearchShortURL(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+	}
+
+	code := r.URL.Path[1:]
+	log.Println("Search:", code)
+}
+
+func (s *HttpServer) handleCreateShortURL(w http.ResponseWriter, r *http.Request) {
+	url := r.FormValue("q")
+	json := r.FormValue("json")
+	log.Println("Create:", url, json)
+}
+
 func (s *HttpServer) handleRequest(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case http.MethodGet:

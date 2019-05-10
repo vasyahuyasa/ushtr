@@ -25,10 +25,7 @@ func loadConfig() config {
 	return config{
 		addr:       getEnv("USHTR_ADDR", defaultAddr),
 		port:       getEnvAsInt("USHTR_PORT", defaultPort),
-		pgHost:     getEnv("USHTR_PG_HOST", "localhost"),
-		pgPort:     getEnvAsInt("USHTR_PG_PORT", 5432),
 		pgUser:     getEnv("USHTR_PG_USER", ""),
-		pgDatabe:   getEnv("USHTR_PG_DATABASE", ""),
 		pgPassword: getEnv("USHTR_PG_PASSWORD", ""),
 	}
 }

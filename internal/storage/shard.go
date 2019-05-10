@@ -53,6 +53,10 @@ func (s Shard) String() string {
 	return fmt.Sprintf("%d - %s:%d", s.id, s.host, s.port)
 }
 
+func (s Shard) DB() *sql.DB {
+	return s.db
+}
+
 func (sm *Shards) AddShard(s Shard) error {
 	if sm.list == nil {
 		sm.list = map[int]Shard{}

@@ -8,12 +8,12 @@ import (
 )
 
 type HttpServer struct {
-	storage   storage.URL
+	storage   storage.GetterSaver
 	shortener shortener.EncoderDecoder
 	mux       *http.ServeMux
 }
 
-func NewServer(urlStorage storage.URL, shortener shortener.EncoderDecoder) *HttpServer {
+func NewServer(urlStorage storage.GetterSaver, shortener shortener.EncoderDecoder) *HttpServer {
 	srv := &HttpServer{}
 	srv.makeRoutes()
 	return srv
@@ -23,7 +23,8 @@ func (s *HttpServer) makeRoutes() {
 	if s.mux == nil {
 		s.mux = http.NewServeMux()
 	}
-	s.mux.Handle("/", http.HandlerFunc(s.handleRequest))
+	s.mux.Handle("/", http.HandlerFunc(s.handleSearchShortURL))
+	s.mux.Handle("/-", http.HandlerFunc(s.handleCreateShortURL))
 }
 
 func (srv *HttpServer) Run() error {

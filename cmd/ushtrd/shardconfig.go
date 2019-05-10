@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"strconv"
@@ -34,7 +35,7 @@ func getShardPort(shard int) (int, bool) {
 	return port, true
 }
 
-func loadShards(port int, user, password, database string) []storage.Shard {
+func loadShards(port int, user, password string) []storage.Shard {
 	shards := []storage.Shard{}
 
 	for _, env := range os.Environ() {
@@ -58,7 +59,8 @@ func loadShards(port int, user, password, database string) []storage.Shard {
 			shardPort = port
 		}
 
-		shard, err := storage.MakeShard(id, host, shardPort, user, password, database)
+		dbName := fmt.Sprintf("ushtr_%d", id)
+		shard, err := storage.MakeShard(id, host, shardPort, user, password, dbName)
 		if err != nil {
 			log.Printf("can not create shard %q: %v", host, err)
 			continue

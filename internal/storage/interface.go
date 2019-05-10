@@ -17,3 +17,8 @@ type Saver interface {
 type Getter interface {
 	Get(id uint64) (string, error)
 }
+
+type GetterSaver interface {
+	Getter
+	Saver
+}
