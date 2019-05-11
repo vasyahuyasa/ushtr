@@ -1,13 +1,12 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"os"
 	"strconv"
 	"strings"
 
-	"github.com/vasyahuyasa/ushtr/internal/storage"
+	"github.com/vasyahuyasa/ushtr/internal/storage/pg"
 )
 
 func isShardConfig(key string) bool {
@@ -35,8 +34,8 @@ func getShardPort(shard int) (int, bool) {
 	return port, true
 }
 
-func loadShards(port int, user, password string) []storage.Shard {
-	shards := []storage.Shard{}
+func loadShards(port int, user, password string) []pg.Shard {
+	shards := []pg.Shard{}
 
 	for _, env := range os.Environ() {
 		parts := strings.Split(env, "=")
@@ -59,8 +58,9 @@ func loadShards(port int, user, password string) []storage.Shard {
 			shardPort = port
 		}
 
-		dbName := fmt.Sprintf("ushtr_%d", id)
-		shard, err := storage.MakeShard(id, host, shardPort, user, password, dbName)
+		//dbName := fmt.Sprintf("ushtr_%d", id)
+		dbName := "public"
+		shard, err := pg.MakeShard(id, host, shardPort, user, password, dbName)
 		if err != nil {
 			log.Printf("can not create shard %q: %v", host, err)
 			continue

@@ -1,4 +1,4 @@
-package storage
+package pg
 
 import (
 	"database/sql"
@@ -77,6 +77,6 @@ func (sm *Shards) getShard(shard int) (Shard, bool) {
 }
 
 func (sm *Shards) getRandomShard() Shard {
-	n := rand.Intn(len(sm.ids))
+	n := sm.ids[rand.Intn(len(sm.ids))]
 	return sm.list[n]
 }

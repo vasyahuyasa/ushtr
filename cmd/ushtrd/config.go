@@ -12,6 +12,7 @@ type config struct {
 	// web
 	addr string
 	port int
+	url  string
 
 	// postgresql
 	pgHost     string
@@ -25,6 +26,7 @@ func loadConfig() config {
 	return config{
 		addr:       getEnv("USHTR_ADDR", defaultAddr),
 		port:       getEnvAsInt("USHTR_PORT", defaultPort),
+		url:        getEnv("USHTR_URL", "http://localhost/"),
 		pgUser:     getEnv("USHTR_PG_USER", ""),
 		pgPassword: getEnv("USHTR_PG_PASSWORD", ""),
 	}

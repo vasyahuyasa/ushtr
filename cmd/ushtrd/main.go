@@ -1,12 +1,13 @@
 package main
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/vasyahuyasa/ushtr/internal/web"
 
 	"github.com/vasyahuyasa/ushtr/internal/shortener/simple"
-	"github.com/vasyahuyasa/ushtr/internal/storage"
+	"github.com/vasyahuyasa/ushtr/internal/storage/pg"
 
 	// autoload .env for developer purposes
 	_ "github.com/joho/godotenv/autoload"
@@ -19,7 +20,7 @@ func main() {
 		log.Fatal("no shards defined, define at least one shard")
 	}
 
-	shardList := &storage.Shards{}
+	shardList := &pg.Shards{}
 	for _, shard := range shards {
 		err := shardList.AddShard(shard)
 		if err != nil {
@@ -32,13 +33,15 @@ func main() {
 		log.Println("shard", shard)
 	}
 
-	storage := storage.NewStorage(shardList)
+	storage := pg.NewStorage(shardList)
 
 	shortener, err := simple.New()
 	if err != nil {
 		log.Fatalf("can not create shortener: %v", err)
 	}
 
-	srv := web.NewServer(storage, shortener)
-	log.Fatal(srv.Run())
+	addr := fmt.Sprintf("%s:%d", cfg.addr, cfg.port)
+	log.Printf("Listen on http://%s", addr)
+	srv := web.NewServer(storage, shortener, cfg.url)
+	log.Fatal(srv.Run(addr))
 }

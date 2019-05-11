@@ -5,7 +5,7 @@ import (
 )
 
 // ErrNotFound ошибка возвращаемая в случае если запрашиваемое значение не найдено в хранилище
-var ErrNotFound = errors.New("key not found")
+var ErrNotFound = errors.New("url not found")
 
 // Saver позволяет сохранять ссылку в хранилище и в замен получаьть уникальный идентификатор
 type Saver interface {
