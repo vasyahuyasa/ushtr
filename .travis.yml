@@ -8,7 +8,7 @@ jobs:
   include:
     - stage: build
       name: "Dev build"
-      if: branch = master
+      if: branch = master AND tag IS blank
       script:       
         - docker build -t vasyahuyasa/ushtr:dev .
         - docker push vasyahuyasa/ushtr:dev
