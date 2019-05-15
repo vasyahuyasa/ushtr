@@ -19,4 +19,4 @@ jobs:
         - docker build -t vasyahuyasa/ushtr:latest .        
         - docker push vasyahuyasa/ushtr:latest
         - docker tag vasyahuyasa/ushtr:latest vasyahuyasa/ushtr:$TRAVIS_TAG
-        - docker push vasyahuyasa/ushtr:TRAVIS_TAG
+        - docker push vasyahuyasa/ushtr:$TRAVIS_TAG
