@@ -34,6 +34,15 @@ func getShardPort(shard int) (int, bool) {
 	return port, true
 }
 
+func getShardDatabase(shard int) string {
+	dbName, ok := os.LookupEnv("USHTR_" + strconv.Itoa(shard) + "_PG_DATABASE")
+	if !ok {
+		return "public"
+	}
+
+	return dbName
+}
+
 func loadShards(port int, user, password string) []pg.Shard {
 	shards := []pg.Shard{}
 
@@ -59,7 +68,7 @@ func loadShards(port int, user, password string) []pg.Shard {
 		}
 
 		//dbName := fmt.Sprintf("ushtr_%d", id)
-		dbName := "public"
+		dbName := getShardDatabase(id)
 		shard, err := pg.MakeShard(id, host, shardPort, user, password, dbName)
 		if err != nil {
 			log.Printf("can not create shard %q: %v", host, err)
