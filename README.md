@@ -1,5 +1,7 @@
 # ushtr (URL shortener)
 
+[![Scc Count Badge](https://sloc.xyz/github.com/vasyahuyasa/ushtr/)](https://github.com/vasyahuyasa/ushtr/)
+
 Ushtr is simple url shortener service with scalability in mind.
 
 ## API
