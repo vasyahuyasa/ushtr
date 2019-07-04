@@ -1,6 +1,6 @@
 # ushtr (URL shortener)
 
-[![Scc Count Badge](https://sloc.xyz/github.com/vasyahuyasa/ushtr/)](https://github.com/vasyahuyasa/ushtr/)
+[![Scc Count Badge](https://sloc.xyz/github/vasyahuyasa/ushtr/)](https://github.com/vasyahuyasa/ushtr/)
 
 Ushtr is simple url shortener service with scalability in mind.
 
